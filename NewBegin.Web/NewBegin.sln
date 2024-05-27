@@ -4,17 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.8.34408.163
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewBegin", "NewBegin.csproj", "{99E03084-60E9-44FA-B7C1-F4F03EE226C1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6593B44F-BE56-47E9-A25F-FF9182B6F920} = {6593B44F-BE56-47E9-A25F-FF9182B6F920}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewBegin.Data", "..\NewBegin.Data\NewBegin.Data.csproj", "{8C266236-E302-4FA0-ABE4-003AF7AD497A}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решения", "Элементы решения", "{DB8AEDFD-B46E-4D1C-9486-881ECEB78FAA}"
-	ProjectSection(SolutionItems) = preProject
-		..\.dockerignore = ..\.dockerignore
-		..\.gitignore = ..\.gitignore
-		..\Dockerfile = ..\Dockerfile
-		..\Jenkinsfile = ..\Jenkinsfile
-		..\README.md = ..\README.md
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewBegin.Infrastructure", "..\NewBegin.Infrastructure\NewBegin.Infrastructure.csproj", "{6593B44F-BE56-47E9-A25F-FF9182B6F920}"
 EndProject
