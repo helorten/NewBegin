@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NewBegin.API\NewBegin.API.csproj" />
     <ProjectReference Include="..\NewBegin.Infrastructure\NewBegin.Infrastructure.csproj" />
   </ItemGroup>
 

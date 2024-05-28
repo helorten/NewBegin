@@ -10,6 +10,11 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["NewBegin.csproj", "."]
+COPY ["NewBegin.API.csproj", "."]
+COPY ["NewBegin.Data.csproj", "."]
+COPY ["NewBegin.Infrastructure.csproj", "."]
+COPY ["NewBegin.Services.csproj", "."]
+COPY ["NewBegin.Tests.csproj", "."]
 RUN dotnet restore "./././NewBegin.csproj"
 COPY . .
 WORKDIR "/src/."

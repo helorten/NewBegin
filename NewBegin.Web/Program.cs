@@ -1,17 +1,30 @@
-using NewBegin.Data.Models;
-
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers()
+            .AddApplicationPart(typeof(NewBegin.API.Controllers.UserController).Assembly).AddControllersAsServices();
+
 using (var context = new ApplicationDbContext())
 {
-    // Получение всех продуктов
     var products = context.Users.ToList();
     foreach (var p in products)
     {
         Console.WriteLine($"Name: {p.Name}, Id: {p.Id}");
     }
 }
+
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseHsts();
+
+app.UseRouting();
+
+app.UseAuthorization();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
 
 app.Run();
