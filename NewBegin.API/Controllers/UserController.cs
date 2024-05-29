@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NewBegin.Data.Models;
 
 namespace NewBegin.API.Controllers
@@ -7,6 +8,11 @@ namespace NewBegin.API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        public UserController(ILogger<UserController> logger) 
+        {
+            logger.LogInformation("UserController Init");
+        }
+
         [HttpGet]
         public IActionResult GetUserById()
         {

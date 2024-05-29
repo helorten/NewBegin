@@ -1,18 +1,28 @@
+using Serilog;
+using Microsoft.Extensions.Configuration;
+using Serilog.Formatting.Json;
+
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers()
-            .AddApplicationPart(typeof(NewBegin.API.Controllers.UserController).Assembly).AddControllersAsServices();
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .WriteTo.File(new JsonFormatter(), "Logs/log-.txt", rollingInterval: RollingInterval.Minute)
+    .CreateLogger();
 
-using (var context = new ApplicationDbContext())
-{
-    var products = context.Users.ToList();
-    foreach (var p in products)
-    {
-        Console.WriteLine($"Name: {p.Name}, Id: {p.Id}");
-    }
-}
+builder.Host.UseSerilog();
+
+builder.Services.AddControllers()
+            .AddApplicationPart(typeof(NewBegin.API.Controllers.UserController).Assembly)
+            .AddControllersAsServices();
+
+
+
 
 var app = builder.Build();
+
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
