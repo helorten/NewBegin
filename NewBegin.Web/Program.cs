@@ -1,6 +1,7 @@
 using Serilog;
 using Microsoft.Extensions.Configuration;
 using Serilog.Formatting.Json;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,11 +18,26 @@ builder.Services.AddControllers()
             .AddApplicationPart(typeof(NewBegin.API.Controllers.UserController).Assembly)
             .AddControllersAsServices();
 
-
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "My API",
+        Version = "v1",
+        Description = "NewBegin APIs",
+    });
+});
 
 
 var app = builder.Build();
 
+app.UseSwagger();
+
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+    c.RoutePrefix = string.Empty;
+});
 
 
 app.UseHttpsRedirection();
