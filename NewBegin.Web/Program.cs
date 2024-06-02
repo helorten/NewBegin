@@ -2,6 +2,10 @@ using Serilog;
 using Microsoft.Extensions.Configuration;
 using Serilog.Formatting.Json;
 using Microsoft.OpenApi.Models;
+using NewBegin.Infrastructure.Repositories.Interfaces;
+using NewBegin.Services.Intefaces;
+using NewBegin.Infrastructure.Repositories.Implementations;
+using NewBegin.Services.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +17,9 @@ Log.Logger = new LoggerConfiguration()
     .CreateLogger();
 
 builder.Host.UseSerilog();
-
+builder.Services.AddDbContext<ApplicationDbContext>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddControllers()
             .AddApplicationPart(typeof(NewBegin.API.Controllers.UserController).Assembly)
             .AddControllersAsServices();

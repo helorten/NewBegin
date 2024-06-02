@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NewBegin.Data\NewBegin.Data.csproj" />
+    <ProjectReference Include="..\NewBegin.Services\NewBegin.Services.csproj" />
   </ItemGroup>
 
 </Project>

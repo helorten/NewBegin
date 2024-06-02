@@ -14,6 +14,6 @@ public class ApplicationDbContext : DbContext
         var connectionStringPath = Path.Combine(basePath, "dbConnection.txt");
         var connectionString = File.ReadAllText(connectionStringPath);
 
-        optionsBuilder.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 37)));
+        optionsBuilder.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 37)), b => b.MigrationsAssembly("NewBegin.Infrastructure"));
     }
 }
