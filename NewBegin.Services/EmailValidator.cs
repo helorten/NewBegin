@@ -1,46 +1,48 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
-namespace NewBegin.Services
+public class EmailValidator
 {
-    public class EmailValidator
+    private static readonly Regex EmailRegex = new Regex(
+        @"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$",
+        RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+    public static async Task<bool> IsValidEmailAsync(string email)
     {
-        private static readonly Regex EmailRegex = new Regex(
-       @"^[^@\s]+@[^@\s]+\.[^@\s]+$",
-       RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        if (string.IsNullOrWhiteSpace(email) || email.Length > 256)
+            return false;
 
-        public static async Task<bool> IsValidEmailAsync(string email)
+        try
         {
-            if (string.IsNullOrWhiteSpace(email) || email.Length > 256)
+            if (!EmailRegex.IsMatch(email))
                 return false;
 
-            try
-            {
-                // Perform a basic format check
-                if (!EmailRegex.IsMatch(email))
-                    return false;
+            var match = Regex.Match(email, @"(@)(.+)$");
 
-                // Normalize the domain asynchronously
-                email = await Task.Run(() => Regex.Replace(email, @"(@)(.+)$", DomainMapper, RegexOptions.None, TimeSpan.FromMilliseconds(200)));
-
-                string DomainMapper(Match match)
-                {
-                    var idn = new IdnMapping();
-                    var domainName = idn.GetAscii(match.Groups[2].Value);
-                    return match.Groups[1].Value + domainName;
-                }
-
-                // Perform a final regex check after normalization
-                return EmailRegex.IsMatch(email);
-            }
-            catch (RegexMatchTimeoutException)
-            {
+            if (!match.Success || match.Groups.Count != 3)
                 return false;
-            }
-            catch (ArgumentException)
-            {
-                return false;
-            }
+
+            string localPart = email.Substring(0, match.Index);
+            string domainPart = match.Groups[2].Value;
+
+            string asciiDomain = await Task.Run(() => {
+                var idn = new IdnMapping();
+                return idn.GetAscii(domainPart);
+            });
+
+            string normalizedEmail = localPart + "@" + asciiDomain;
+
+            return EmailRegex.IsMatch(normalizedEmail);
+        }
+        catch (RegexMatchTimeoutException)
+        {
+            return false;
+        }
+        catch (ArgumentException)
+        {
+            return false;
         }
     }
 }
