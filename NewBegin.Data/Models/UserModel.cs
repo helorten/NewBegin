@@ -1,9 +1,12 @@
-﻿namespace NewBegin.Data.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace NewBegin.Data.Models
 {
     public class UserModel
     {
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
+        [Key]
+        public required string Id { get; set; }
+        public required string Name { get; set; }
+        public required string Email { get; set; }
     }
 }

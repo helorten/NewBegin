@@ -15,6 +15,7 @@ namespace NewBegin.Infrastructure.Repositories.Implementations
         {
             var newUser = new Data.Models.UserModel()
             {
+                Id = UserIDGenerator.GenerateID(),
                 Email = newUserData.Email,
                 Name = newUserData.Name
             };

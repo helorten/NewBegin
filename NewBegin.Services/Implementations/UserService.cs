@@ -30,6 +30,7 @@ namespace NewBegin.Services.Implementations
                     Success = false,
                 };
             }
+
             if (!await EmailValidator.IsValidEmailAsync(newUser.Email))
             {
                 logger.LogWarning("Incorrect email adress : {email}", newUser.Email);

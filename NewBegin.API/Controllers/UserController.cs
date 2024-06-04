@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NewBegin.Data.AuxiliaryModels;
-using NewBegin.Data.Models;
 using NewBegin.Services.Intefaces;
 
 namespace NewBegin.API.Controllers
@@ -20,28 +19,6 @@ namespace NewBegin.API.Controllers
             this.userService = userService;
         }
 
-        [HttpGet]
-        public IActionResult GetUserById()
-        {
-            var user = new UserModel()
-            {
-                Name = "test",
-                Id = "111"
-            };
-            return Ok(user);
-
-        }
-        [HttpGet("{name}")]
-        public IActionResult GetUserByName(string name)
-        {
-            var user = new UserModel()
-            {
-                Name = "name",
-                Id = "222"
-            };
-            return Ok(user);
-
-        }
         [HttpPost]
         public async Task<IActionResult> PostUser(UserRegistrationModel user)
         {
@@ -52,6 +29,5 @@ namespace NewBegin.API.Controllers
             }
             return BadRequest();
         }
-
     }
 }
