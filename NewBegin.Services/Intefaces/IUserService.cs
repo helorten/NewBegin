@@ -4,6 +4,6 @@ namespace NewBegin.Services.Intefaces
 {
     public interface IUserService
     {
-        public Task<UserRegistrationResponse> UserRegistration(UserRegistrationModel newUser);
+        public Task<ServiceResponse> UserRegistration(UserRegistrationModel newUser);
     }
 }

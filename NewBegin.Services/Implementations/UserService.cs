@@ -19,12 +19,12 @@ namespace NewBegin.Services.Implementations
         }
 
 
-        public async Task<UserRegistrationResponse> UserRegistration(UserRegistrationModel newUser)
+        public async Task<ServiceResponse> UserRegistration(UserRegistrationModel newUser)
         {
             if (newUser == null)
             {
                 logger.LogError("An empty {user} object came in for registration", newUser);
-                return new UserRegistrationResponse()
+                return new ServiceResponse()
                 {
                     Message = "Internal server Error",
                     Success = false,
@@ -34,7 +34,7 @@ namespace NewBegin.Services.Implementations
             if (!await EmailValidator.IsValidEmailAsync(newUser.Email))
             {
                 logger.LogWarning("Incorrect email adress : {email}", newUser.Email);
-                return new UserRegistrationResponse()
+                return new ServiceResponse()
                 {
                     Message = "Incorrect email address entered",
                     Success = false,
@@ -42,7 +42,7 @@ namespace NewBegin.Services.Implementations
             }
             if (!await userRepository.CheckingUserAvailabilityByEmail(newUser.Email))
             {
-                return new UserRegistrationResponse()
+                return new ServiceResponse()
                 {
                     Message = "A user with this email address has already been registered",
                     Success = false,
@@ -51,14 +51,14 @@ namespace NewBegin.Services.Implementations
             if (await userRepository.AddNewUser(newUser) == 0)
             {
                 logger.LogError("Failed to save a new user to the database");
-                return new UserRegistrationResponse()
+                return new ServiceResponse()
                 {
                     Message = "Internal server Error",
                     Success = false,
                 };
             }
             logger.LogInformation("Added new user: {email}", newUser.Email);
-            return new UserRegistrationResponse()
+            return new ServiceResponse()
             {
                 Message = "Registration successfully",
                 Success = true,

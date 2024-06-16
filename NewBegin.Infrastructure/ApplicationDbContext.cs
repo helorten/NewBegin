@@ -8,6 +8,7 @@ public class ApplicationDbContext : DbContext
         Database.EnsureCreated();
     }
     public DbSet<UserModel> Users { get; set; }
+    public DbSet<BusinessModel> Businesses { get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         var basePath = AppContext.BaseDirectory;

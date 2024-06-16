@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace NewBegin.Data.Models
+namespace NewBegin.Data.AuxiliaryModels
 {
-    public class BusinessModel
+    public class NewBusinessRegistrationModel
     {
-        public required string Id { get; set; }
+        [MaxLength(256)]
         public required string Name { get; set; }
+        [MaxLength(2048)]
         public required string Description { get; set; }
-        public required string OwnerID { get; set; }
         public required TimeOnly OpeningTime { get; set; }
         public required TimeOnly ClosingTime { get; set; }
         public required string Location { get; set; }
+        public required string OwnerID { get; set; }
     }
 }

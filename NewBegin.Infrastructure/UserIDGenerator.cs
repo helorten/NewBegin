@@ -2,15 +2,14 @@
 {
     internal static class UserIDGenerator
     {
-        private static readonly Random Random = new Random();
+        private static readonly Random random = new Random();
+        private const string chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+        private const int idLength = 5;
 
         public static string GenerateID()
         {
-            DateTime currentDate = DateTime.Now;
-            long timestamp = currentDate.Millisecond;
-            int randomPart = Random.Next(10000, 99999);
-
-            return $"{timestamp}{randomPart}";
+            return new string(Enumerable.Repeat(chars, idLength)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
         }
     }
 }

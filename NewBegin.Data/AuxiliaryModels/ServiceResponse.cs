@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace NewBegin.Data.AuxiliaryModels
 {
-    public class UserRegistrationResponse
+    public class ServiceResponse
     {
         public bool Success { get; set; }
-        public string Message { get; set; }
+        public string? Message { get; set; }
     }
 }
